@@ -168,8 +168,14 @@ class FontVendorDVD {
         const minDimension = Math.min(window.innerWidth, window.innerHeight);
         const maxDimension = Math.max(window.innerWidth, window.innerHeight);
 
-        // Font size: scale from 40px (small screens) to 180px (large screens)
-        this.fontSize = Math.max(40, Math.min(180, minDimension * 0.08));
+        // Font size: scale from 40px (small screens) to 360px (large screens)
+        // Use exponential scaling for larger screens to make them really pop
+        let baseFontSize = minDimension * 0.08;
+        if (minDimension > 800) {
+            // Extra scaling for large screens (2x factor boost)
+            baseFontSize = minDimension * 0.16;
+        }
+        this.fontSize = Math.max(40, Math.min(360, baseFontSize));
 
         // Speed scaling based on screen size
         const speedMultiplier = Math.max(0.5, Math.min(3, maxDimension / 800));
