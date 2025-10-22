@@ -10,10 +10,11 @@ class FontVendorDVD {
             '#FF00FF', '#00FFFF', '#FFA500', '#FF69B4'
         ];
         this.currentColorIndex = 0;
-        this.fontSize = 120;
+        this.fontSize = 120; // Will be calculated based on viewport
         this.textWidth = 0;
         this.textHeight = 0;
         this.animationId = null;
+        this.baseSpeed = 2; // Will be scaled based on viewport
 
         this.init();
     }
@@ -139,10 +140,15 @@ class FontVendorDVD {
         this.resizeCanvas();
         window.addEventListener('resize', () => this.resizeCanvas());
 
-        // Initialize position and velocity
+        // Initialize viewport-responsive settings
+        this.updateViewportSettings();
+
+        // Initialize position and velocity with responsive spacing
+        const textEstimateWidth = this.fontSize * 8; // Rough estimate for positioning
+        const textEstimateHeight = this.fontSize * 1.2;
         this.position = {
-            x: Math.random() * (this.canvas.width - 600),
-            y: Math.random() * (this.canvas.height - 150)
+            x: Math.random() * Math.max(100, this.canvas.width - textEstimateWidth),
+            y: Math.random() * Math.max(50, this.canvas.height - textEstimateHeight)
         };
 
         // Start animation
@@ -152,6 +158,27 @@ class FontVendorDVD {
     resizeCanvas() {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
+
+        // Update font size and speed based on viewport
+        this.updateViewportSettings();
+    }
+
+    updateViewportSettings() {
+        // Calculate font size based on viewport (responsive scaling)
+        const minDimension = Math.min(window.innerWidth, window.innerHeight);
+        const maxDimension = Math.max(window.innerWidth, window.innerHeight);
+
+        // Font size: scale from 40px (small screens) to 180px (large screens)
+        this.fontSize = Math.max(40, Math.min(180, minDimension * 0.08));
+
+        // Speed scaling based on screen size
+        const speedMultiplier = Math.max(0.5, Math.min(3, maxDimension / 800));
+        this.velocity.x = this.velocity.x > 0 ?
+            this.baseSpeed * speedMultiplier :
+            -this.baseSpeed * speedMultiplier;
+        this.velocity.y = this.velocity.y > 0 ?
+            this.baseSpeed * speedMultiplier * 0.75 :
+            -this.baseSpeed * speedMultiplier * 0.75;
     }
 
     animate() {
@@ -196,14 +223,17 @@ class FontVendorDVD {
         // Draw text with glow effect
         const currentColor = this.colors[this.currentColorIndex];
 
+        // Responsive glow effect based on font size
+        const glowIntensity = this.fontSize / 3;
+
         // Large outer glow
         this.ctx.shadowColor = currentColor;
-        this.ctx.shadowBlur = 40;
+        this.ctx.shadowBlur = glowIntensity;
         this.ctx.fillStyle = currentColor;
         this.ctx.fillText(this.vendorName, this.position.x, this.position.y);
 
         // Medium glow
-        this.ctx.shadowBlur = 20;
+        this.ctx.shadowBlur = glowIntensity / 2;
         this.ctx.fillStyle = currentColor;
         this.ctx.fillText(this.vendorName, this.position.x, this.position.y);
 
