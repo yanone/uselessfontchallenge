@@ -114,6 +114,18 @@ Built for the **#uselessfontchallenge** - proving that even "useless" font featu
 
 **Prompt count:** 5/5 max ✅
 
+### 🛠️ **DEVELOPMENT ENVIRONMENT**
+```
+    ┌─ CYBER DEVELOPMENT SETUP ─┐
+    │                            │
+    │  IDE: VS Code              │
+    │  Agent: GitHub Copilot     │
+    │  AI Model: Claude Sonnet 4 │
+    │  Vibes: Maximum 90s        │
+    │                            │
+    └────────────────────────────┘
+```
+
 ### 📧 **WEBMASTER CONTACT INFO**
 *Got feedback? Found a bug? Want to trade GeoCities links?*
 - **ICQ:** Ask your parents what this means
