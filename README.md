@@ -121,6 +121,7 @@ Built for the **#uselessfontchallenge** - proving that even "useless" font featu
     │  IDE: VS Code              │
     │  Agent: GitHub Copilot     │
     │  AI Model: Claude Sonnet 4 │
+    │  # of prompts: 4           │
     │  Vibes: Maximum 90s        │
     │                            │
     └────────────────────────────┘
