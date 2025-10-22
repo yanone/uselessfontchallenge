@@ -10,7 +10,7 @@ class FontVendorDVD {
             '#FF00FF', '#00FFFF', '#FFA500', '#FF69B4'
         ];
         this.currentColorIndex = 0;
-        this.fontSize = 48;
+        this.fontSize = 120;
         this.textWidth = 0;
         this.textHeight = 0;
         this.animationId = null;
@@ -141,8 +141,8 @@ class FontVendorDVD {
 
         // Initialize position and velocity
         this.position = {
-            x: Math.random() * (this.canvas.width - 200),
-            y: Math.random() * (this.canvas.height - 100)
+            x: Math.random() * (this.canvas.width - 600),
+            y: Math.random() * (this.canvas.height - 150)
         };
 
         // Start animation
@@ -196,15 +196,20 @@ class FontVendorDVD {
         // Draw text with glow effect
         const currentColor = this.colors[this.currentColorIndex];
 
-        // Glow effect
+        // Large outer glow
         this.ctx.shadowColor = currentColor;
+        this.ctx.shadowBlur = 40;
+        this.ctx.fillStyle = currentColor;
+        this.ctx.fillText(this.vendorName, this.position.x, this.position.y);
+
+        // Medium glow
         this.ctx.shadowBlur = 20;
         this.ctx.fillStyle = currentColor;
         this.ctx.fillText(this.vendorName, this.position.x, this.position.y);
 
-        // Bright center text
+        // Main colored text (no white overlay)
         this.ctx.shadowBlur = 0;
-        this.ctx.fillStyle = '#FFFFFF';
+        this.ctx.fillStyle = currentColor;
         this.ctx.fillText(this.vendorName, this.position.x, this.position.y);
 
         // Continue animation
